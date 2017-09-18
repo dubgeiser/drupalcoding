@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Implements hook_schema()
+ */
+function watchlater_schema()
+{
+  $schema = [
+    'watchlater' => [
+      'fields' => [
+        'uid' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'The user ID',
+        ],
+        'nid' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'The node ID',
+        ]
+      ],
+      'primary_key' => ['uid', 'nid']
+    ]
+  ];
+
+  return $schema;
+}

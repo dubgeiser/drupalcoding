@@ -1,0 +1,4 @@
+services:
+  watchlater.storage:
+    class: 'Drupal\watchlater\WatchlaterStorage'
+    arguments: ["@database"]

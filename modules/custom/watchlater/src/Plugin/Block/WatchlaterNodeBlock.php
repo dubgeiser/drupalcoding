@@ -88,7 +88,7 @@ class WatchLaterNodeBlock extends BlockBase
   {
     $node = $this->routeMatch->getParameter('node');
     if (!is_null($node)) {
-      $this->storage->add($node->id(), $this->user->id());
+      $this->storage->add($node->id(), $this->currentUser->id());
     }
 
     return [

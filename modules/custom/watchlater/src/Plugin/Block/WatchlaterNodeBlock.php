@@ -107,13 +107,13 @@ class WatchLaterNodeBlock extends BlockBase
    */
   private function processForm($node)
   {
-      if ($this->storage->isInList($node->id(), $this->currentUser->id())) {
-          $formType = 'Drupal\watchlater\Form\RemoveForm';
-      } else {
-          $formType = 'Drupal\watchlater\Form\AddForm';
-      }
+    if ($this->storage->isInList($node->id(), $this->currentUser->id())) {
+      $formType = 'Drupal\watchlater\Form\RemoveForm';
+    } else {
+      $formType = 'Drupal\watchlater\Form\AddForm';
+    }
 
-      return $this->formBuilder->getForm($formType, $node->id());
+    return $this->formBuilder->getForm($formType, $node->id());
   }
 
   /**

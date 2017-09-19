@@ -40,10 +40,10 @@ class WatchlaterStorage implements WatchlaterStorageInterface
 
   public function isInList($nid, $uid)
   {
-    $result = $this->connection->select('watchlater')
-      ->fields(['nid', 'uid'])
-      ->condition('nid', $nid)
-      ->condition('uid', $uid)
+    $result = $this->connection->select('watchlater', 'wl')
+      ->fields('wl', ['nid', 'uid'])
+      ->condition('wl.nid', $nid)
+      ->condition('wl.uid', $uid)
       ->execute()
       ->fetch()
       ;

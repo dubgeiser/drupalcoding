@@ -10,6 +10,7 @@ use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Drupal\watchlater\WatchlaterStorageInterface;
+use Drupal\Core\Form\FormBuilderInterface;
 
 
 /**
@@ -45,6 +46,7 @@ class WatchLaterNodeBlock extends BlockBase
    * @param string $plug_id The identifier for the plugin.
    * @param string $plugin_definition The plugin implementation definition.
    * @param RouteMatchInterface $routeMatch The current route match
+   * @param FormBuilderInterface $form The form builder for watch later items.
    */
   public function __construct(
     array $configuration,
@@ -52,13 +54,15 @@ class WatchLaterNodeBlock extends BlockBase
     $plugin_definition,
     RouteMatchInterface $routeMatch,
     WatchlaterStorageInterface $storage,
-    AccountInterface $user
+    AccountInterface $user,
+    FormBuilderInterface $formBuilder
   )
   {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatch = $routeMatch;
     $this->storage = $storage;
     $this->currentUser = $user;
+    $this->formBuilder = $formBuilder;
   }
 
   /**
@@ -77,7 +81,8 @@ class WatchLaterNodeBlock extends BlockBase
       $plugin_definition,
       $container->get("current_route_match"),
       $container->get("watchlater.storage"),
-      $container->get("current_user")
+      $container->get("current_user"),
+      $container->get("form_builder")
     );
   }
 
@@ -87,12 +92,36 @@ class WatchLaterNodeBlock extends BlockBase
   public function build()
   {
     $node = $this->routeMatch->getParameter('node');
-    if (!is_null($node)) {
-      $this->storage->add($node->id(), $this->currentUser->id());
+    $markup = '';
+    if ($this->isValidNode($node)) {
+      $markup = $this->processWatchlaterForm($node);
     }
 
     return [
-      '#markup' => '<h1>Hello world</h1>'
+      '#markup' => $markup
     ];
+  }
+
+  /**
+   * Process a watch later form and return its rendered markup.
+   * @param Node $node The node to process the form for.
+   * @return string Rendered form.
+   */
+  private function processWatchlaterForm($node)
+  {
+      if ($this->storage->isInList($node->id(), $this->currentUser->id())) {
+          $formType = 'Drupal\watchlater\Form\RemoveForm';
+      } else {
+          $formType = 'Drupal\watchlater\Form\AddForm';
+      }
+
+      return render($this->formBuilder->getForm($formType, $node->id()));
+  }
+
+  /**
+   */
+  private function isValidNode($node)
+  {
+    return !is_null($node) && $this->currentUser->id() > 0;
   }
 }

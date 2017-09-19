@@ -42,11 +42,17 @@ class WatchLaterNodeBlock extends BlockBase
   private $currentUser;
 
   /**
+   *@var bool Whether or not the watchlater module is enabled.
+   */
+  private $moduleIsEnabled;
+
+  /**
    * @param array $configuration The configuration for the plugin
    * @param string $plug_id The identifier for the plugin.
    * @param string $plugin_definition The plugin implementation definition.
    * @param RouteMatchInterface $routeMatch The current route match
    * @param FormBuilderInterface $form The form builder for watch later items.
+   * @param bool $moduleIsEnabled Whether or not the module is enabled.
    */
   public function __construct(
     array $configuration,
@@ -55,7 +61,8 @@ class WatchLaterNodeBlock extends BlockBase
     RouteMatchInterface $routeMatch,
     WatchlaterStorageInterface $storage,
     AccountInterface $user,
-    FormBuilderInterface $formBuilder
+    FormBuilderInterface $formBuilder,
+    $moduleIsEnabled
   )
   {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -63,6 +70,7 @@ class WatchLaterNodeBlock extends BlockBase
     $this->storage = $storage;
     $this->currentUser = $user;
     $this->formBuilder = $formBuilder;
+    $this->moduleIsEnabled = $moduleIsEnabled;
   }
 
   /**
@@ -82,7 +90,8 @@ class WatchLaterNodeBlock extends BlockBase
       $container->get("current_route_match"),
       $container->get("watchlater.storage"),
       $container->get("current_user"),
-      $container->get("form_builder")
+      $container->get("form_builder"),
+      \Drupal::config('watchlater.config')->get('is_enabled')
     );
   }
 
@@ -124,7 +133,7 @@ class WatchLaterNodeBlock extends BlockBase
   {
     return !is_null($node)
       && $this->currentUser->id() > 0
-      && \Drupal::config('watchlater.config')->get('is_enabled');
+      && $this->moduleIsEnabled
       ;
   }
 }

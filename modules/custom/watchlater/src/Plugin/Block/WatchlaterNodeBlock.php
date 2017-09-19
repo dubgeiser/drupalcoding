@@ -92,14 +92,12 @@ class WatchLaterNodeBlock extends BlockBase
   public function build()
   {
     $node = $this->routeMatch->getParameter('node');
-    $markup = '';
-    if ($this->isValidNode($node)) {
-      $markup = $this->processWatchlaterForm($node);
+    $markup = null;
+    if ($this->isValid($node)) {
+      $markup = $this->processForm($node);
     }
 
-    return [
-      '#markup' => $markup
-    ];
+    return $markup;
   }
 
   /**
@@ -107,7 +105,7 @@ class WatchLaterNodeBlock extends BlockBase
    * @param Node $node The node to process the form for.
    * @return string Rendered form.
    */
-  private function processWatchlaterForm($node)
+  private function processForm($node)
   {
       if ($this->storage->isInList($node->id(), $this->currentUser->id())) {
           $formType = 'Drupal\watchlater\Form\RemoveForm';
@@ -115,12 +113,14 @@ class WatchLaterNodeBlock extends BlockBase
           $formType = 'Drupal\watchlater\Form\AddForm';
       }
 
-      return render($this->formBuilder->getForm($formType, $node->id()));
+      return $this->formBuilder->getForm($formType, $node->id());
   }
 
   /**
+   * @return bool Is the given node valid?  ie. Can it be added/removed from
+   *         the current user's watch later list?
    */
-  private function isValidNode($node)
+  private function isValid($node)
   {
     return !is_null($node) && $this->currentUser->id() > 0;
   }

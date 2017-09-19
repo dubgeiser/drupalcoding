@@ -47,10 +47,13 @@ class WatchLaterNodeBlock extends BlockBase
   private $moduleIsEnabled;
 
   /**
-   * @param array $configuration The configuration for the plugin
+   * @param array $configuration The configuration for this node block.
    * @param string $plug_id The identifier for the plugin.
    * @param string $plugin_definition The plugin implementation definition.
    * @param RouteMatchInterface $routeMatch The current route match
+   * @param WatchlaterStorageInterface $storage The storage for crud of watch
+   *        later items.
+   * @param AccountInterface $user The current logged in user.
    * @param FormBuilderInterface $form The form builder for watch later items.
    * @param bool $moduleIsEnabled Whether or not the module is enabled.
    */

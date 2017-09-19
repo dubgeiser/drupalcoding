@@ -106,7 +106,12 @@ class WatchLaterNodeBlock extends BlockBase
     $node = $this->routeMatch->getParameter('node');
     return $this->isValid($node)
       ? $this->processForm($node)
-      : null;
+      : [
+        '#markup' => 'Log in to add items to your watch later list.',
+        '#cache' => [
+          'tags' => ['config:watchlater.config'],
+        ]
+      ];
   }
 
   /**

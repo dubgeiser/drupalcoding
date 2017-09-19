@@ -4,6 +4,7 @@ namespace Drupal\watchlater\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Form for the configuration of the watchlater module.
@@ -44,5 +45,6 @@ class ConfigForm extends ConfigFormBase
       ->set('is_enabled', $form_state->getValue('is_enabled'))
       ->save()
       ;
+    Cache::invalidateTags(['config:watchlater.config']);
   }
 }

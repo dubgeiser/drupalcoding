@@ -101,12 +101,9 @@ class WatchLaterNodeBlock extends BlockBase
   public function build()
   {
     $node = $this->routeMatch->getParameter('node');
-    $markup = null;
-    if ($this->isValid($node)) {
-      $markup = $this->processForm($node);
-    }
-
-    return $markup;
+    return $this->isValid($node)
+      ? $this->processForm($node)
+      : null;
   }
 
   /**

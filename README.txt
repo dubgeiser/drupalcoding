@@ -1,3 +1,12 @@
+IMPORTANT
+=========
+
+This is a Drupal 8.3.7 standard install with a custom module, 'watchlater', 
+added.
+This is in light of a course at Dropsolid, 'Drupal 8 coding' and is to be 
+considered non-production ready! ;-)
+
+
 
 CONTENTS OF THIS FILE
 ---------------------

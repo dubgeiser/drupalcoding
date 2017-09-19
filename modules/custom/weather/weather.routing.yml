@@ -1,0 +1,7 @@
+weather.content:
+  path: /weatherservice
+  defaults:
+    _controller: '\Drupal\weather\Controller\WeatherController'
+    _title: 'Weather service'
+  requirements:
+    _permission: 'access content'

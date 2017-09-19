@@ -1,0 +1,6 @@
+name: Weather
+type: module
+description: Module in Drupal Coding Training, DEV only!
+package: Dropsolid
+version: VERSION
+core: 8.x

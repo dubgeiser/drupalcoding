@@ -1,0 +1,7 @@
+watchlater.config:
+  type: config_object
+  label: 'Watchlater configuration'
+  mapping:
+    is_enabled:
+      type: boolean
+      label: 'Show watch later buttons on node content'

@@ -1,0 +1,7 @@
+watchlater.configuration:
+  path: '/admin/config/watchlater'
+  defaults:
+    _form: 'Drupal\watchlater\Form\ConfigForm'
+    _title: 'Watch later configuration'
+  requirements:
+    _permission: 'administer site configuration'

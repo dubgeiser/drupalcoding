@@ -1,0 +1,6 @@
+watchlater.configuration:
+  title: 'Watch later configuration'
+  description: 'Additional module settings/configuration for the Watchlater module'
+  parent: system.admin_config_development
+  route_name: watchlater.configuration
+  weight: 5

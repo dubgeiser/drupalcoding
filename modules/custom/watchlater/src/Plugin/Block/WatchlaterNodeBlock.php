@@ -122,6 +122,9 @@ class WatchLaterNodeBlock extends BlockBase
    */
   private function isValid($node)
   {
-    return !is_null($node) && $this->currentUser->id() > 0;
+    return !is_null($node)
+      && $this->currentUser->id() > 0
+      && \Drupal::config('watchlater.config')->get('is_enabled');
+      ;
   }
 }
